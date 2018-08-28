@@ -147,7 +147,7 @@ class Handler(RequestHandler):
                 self.write(chunk)
                 await self.flush()
         except tornado.iostream.StreamClosedError:
-            logger.warning("Client left. Abortingd")
+            logger.warning("Client left. Aborting download from upstream.")
             return
 
         if dlmgr is not None and len(dlmgr.errors) > 0:
