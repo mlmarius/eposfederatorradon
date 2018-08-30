@@ -23,7 +23,7 @@ class RequestSchema(Schema):
         metadata={
             "label": "Minimum time"
         },
-        description = "Start data selection from this UTC datetime"
+        description="Start data selection from this UTC datetime"
     )
 
     maxtime = fields.DateTime(
@@ -31,7 +31,7 @@ class RequestSchema(Schema):
         metadata={
             "label": "Maximum time"
         },
-        description = "End data selection at this UTC datetime"
+        description="End data selection at this UTC datetime"
     )
 
     maxlat = fields.Float(
@@ -40,7 +40,7 @@ class RequestSchema(Schema):
         metadata={
             "label": "Maximum latitude"
         },
-        description = "Maximum latitude"
+        description="Maximum latitude"
     )
 
     minlat = fields.Float(
@@ -120,6 +120,8 @@ class Handler(RequestHandler):
     @use_args(RequestSchema)
     async def get(self, reqargs):
 
+        logger.info('getting radon data ...')
+
         try:
             # attempt to define the geographic area for this query
             bounds = geometry.Polygon([
@@ -133,7 +135,13 @@ class Handler(RequestHandler):
         reqargs['maxtime'] = reqargs['maxtime'].strftime('%Y-%m-%dT%H:%M:%S.000Z')
 
         args = urllib.parse.urlencode(reqargs, safe=':')
-        urls = serviceindex.get(geometry=bounds)
+
+        def ffunc(wspointer):
+            logger.info(f"filter_func is filtering {wspointer}")
+            logger.info(self.__class__)
+            return wspointer.handler == self.__class__
+
+        urls = serviceindex.get(geometry=bounds, filter_func=ffunc)
         urls = [f"{url.url}?{args}" for url in urls]
 
         self.write('{"results": [')

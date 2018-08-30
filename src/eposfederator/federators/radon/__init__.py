@@ -1,7 +1,4 @@
-from eposfederator.libs import serviceindex
-from shapely import geometry
 from eposfederator.libs import appbuilder
-import logging
 
 NAME = 'Radon Federator'
 ID = 'radon'
