@@ -9,7 +9,7 @@ plugins:
                         country: "Romania"
                         name: "National Institute for Earth Physics"
                         geometry: [[19.50, 49.00], [30.00, 49.00], [30.00, 42.0], [19.50, 42.0], [19.50, 49.00]]
-                        url: "https://radon.infp.ro"
+                        url: "https://radon.infp.ro/query"
                     INGV:
                         country_code: "IT"
                         country: "Italy"
