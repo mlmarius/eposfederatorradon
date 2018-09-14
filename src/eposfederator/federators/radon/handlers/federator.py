@@ -120,8 +120,6 @@ class Handler(RequestHandler):
     @use_args(RequestSchema)
     async def get(self, reqargs):
 
-        logger.info('getting radon data ...')
-
         try:
             # attempt to define the geographic area for this query
             bounds = geometry.Polygon([
